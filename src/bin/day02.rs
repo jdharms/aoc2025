@@ -32,8 +32,6 @@ fn first_validator(i: &u64) -> bool {
     first == second
 }
 
-
-
 fn second_validator(i: &u64) -> bool {
     let s = i.to_string();
 
@@ -44,7 +42,6 @@ fn second_validator(i: &u64) -> bool {
             return true
         }
     }
-
 
     false
 }
