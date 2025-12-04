@@ -62,7 +62,7 @@ impl Bank {
                 }
             }
             offset += 1; // Next loop start looking one spot further.
-            // This is the math to "insert" the number into the most significant
+            // This is the math to "insert" the number into the least significant
             // digit (base 10)
             res *= 10;
             res += *max as u64;
@@ -75,13 +75,10 @@ impl FromStr for Bank {
     type Err = ParseBankError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let nums: Option<Vec<u32>> = s.chars().map(|c| {
-            c.to_digit(10)
-        }).collect();
-
-        match nums {
-            Some(ns) => Ok(Bank(ns)),
-            None => Err(ParseBankError::BadCharacter),
-        }
+        s.chars()
+            .map(|c| c.to_digit(10))
+            .collect::<Option<Vec<u32>>>()
+            .ok_or(ParseBankError::BadCharacter)
+            .map(Bank)
     }
 }
