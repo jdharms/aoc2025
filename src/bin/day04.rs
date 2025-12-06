@@ -16,13 +16,12 @@ fn main() {
             match c {
                 FloorTile::Empty => (),
                 FloorTile::Paper => {
-                    let count = neighbors.iter().map(|n|
-                        {
-                            match n {
-                            FloorTile::Empty => 0,
-                            FloorTile::Paper => 1,
-                        }}
-                    ).reduce(|acc, e| acc + e).unwrap();
+                    let count: u32 = neighbors.iter().map(|n| {
+                        match n {
+                        FloorTile::Empty => 0,
+                        FloorTile::Paper => 1,
+                        }
+                    }).sum();
                     if count < 4 {
                         accessible += 1;
                     }
@@ -44,16 +43,17 @@ fn main() {
             match t {
                 FloorTile::Empty => FloorTile::Empty,
                 FloorTile::Paper => {
-                    let count = neighbors.iter().map(|n| {
+                    let count: u32 = neighbors.iter().map(|n| {
                         match n {
                             FloorTile::Empty => 0,
                             FloorTile::Paper => 1,
                         }
-                    }).reduce(|acc, e| acc + e).unwrap();
+                    }).sum();
                     if count < 4 {
-                        return FloorTile::Empty
+                        FloorTile::Empty
+                    } else {
+                        FloorTile::Paper
                     }
-                    return FloorTile::Paper
                 }
             }
         });
